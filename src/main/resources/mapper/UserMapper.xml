@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yjj.back.mapper.UserMapper">
+    <insert id="save" parameterType="user" >
+        insert into user values (#{id},#{username},#{password},#{name},#{phoneNum},#{email},#{statu})
+    </insert>
+    
+    <select id="findAll" resultType="user">
+        select * from user
+    </select>
+
+    <!--查询登录-->
+    <select id="findUsernameAndPwd" resultType="user">
+        select * from user where username=#{username} and password=#{password}
+    </select>
+
+    <!--查询是采购员的name-->
+    <select id="findName" resultType="user">
+        select name from user where statu=#{statu}
+    </select>
+
+    <!--查询每个采购员的物资-->
+    <select id="findByName" resultType="good">
+        select * from good where name=#{name}
+    </select>
+
+    <!--查询未处理的申请-->
+    <select id="countOrder" resultType="String">
+        select count(*) from goodorder where orderStatu is null ;
+    </select>
+
+    <!--审批未处理的申请-->
+    <update id="updateOrder">
+        UPDATE goodorder set orderStatu=#{orderStatu} where id=#{id}
+    </update>
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

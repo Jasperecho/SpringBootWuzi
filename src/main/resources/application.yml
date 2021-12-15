@@ -1,0 +1,42 @@
+server:
+  port: 8081
+
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+  datasource:
+    url: jdbc:mysql:///wuzi
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.yjj.back.domain
+
+logging:
+   level:
+     com.yjj.back.mapper: debug
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+markerhub:
+  jwt:
+    secret: f4e2e52034348f86b67cde581c0f9eb5
+    expire: 604800
+    header: Authorization
+
+shiro-redis:
+  enabled: true
+  redis-manager:
+    host: 127.0.0.1:6379

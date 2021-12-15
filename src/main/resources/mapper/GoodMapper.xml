@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="yjj.back.mapper.GoodMapper">
+
+    <!--添加物资-->
+    <insert id="addGood" parameterType="good" >
+        insert into good values (null,#{goodName},#{goodType},#{goodValue},#{goodNum},#{name},#{goodId})
+    </insert>
+
+    <!--根据id查询物资-->
+    <select id="findById" resultType="good">
+        select * from good where id=#{id}
+    </select>
+
+    <!--修改物资-->
+    <update id="updateGood" parameterType="good">
+        update good set id=#{id},goodName=#{goodName},goodType=#{goodType},goodValue=#{goodValue},goodNum=#{goodNum},name=#{name} where id=#{id}
+    </update>
+
+    <delete id="deleteGood" >
+        delete from good where id=#{id}
+    </delete>
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
