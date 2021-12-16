@@ -18,6 +18,7 @@ public class BuyerController {
     private BuyerService buyerService;
 
     @GetMapping("/orderInfo/{userId}")
+    @ResponseBody
     public List<GoodOrder> orderInfo(@PathVariable("userId") Long userId){
 
         return buyerService.orderInfoById(userId);
