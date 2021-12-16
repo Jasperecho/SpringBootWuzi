@@ -1,5 +1,6 @@
 package com.yjj.back.service.impl;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -59,12 +60,11 @@ public class UserServiceImpl implements UserService {
     }
 
     //分页查询采购员
-//    @Override
-//    public List<User> getUser(Integer pageNum,Integer pageSize,String statu) {
-//        PageHelper.startPage(pageNum,pageSize);
-//
-//        return userMapper.selectUser(statu);
-//    }
+    @Override
+    public List<User> selectUserPage(Integer pageNum,Integer pageSize,String statu) {
+
+        return userMapper.selectUserPage( pageNum, pageSize,statu);
+    }
 
 
     @Override
@@ -102,6 +102,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(Long id) {
         return userMapper.getById(id);
+    }
+
+    @Override
+    public int getTotal(String statu) {
+        return userMapper.getTotal(statu);
     }
 
 

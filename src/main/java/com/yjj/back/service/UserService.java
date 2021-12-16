@@ -15,7 +15,7 @@ public interface UserService{
     User findUsernameAndPwd(String username,String password);
 
     //分页
-//    List<User> getUser(Integer pageNum,Integer pageSize,String statu);
+    List<User> selectUserPage(Integer pageNum,Integer pageSize,String statu);
 
 
     //查询是采购员的name
@@ -36,5 +36,7 @@ public interface UserService{
 
 
     User getById(Long id);
+
+    int getTotal(String statu);
 }
 

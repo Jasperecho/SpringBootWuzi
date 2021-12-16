@@ -64,31 +64,27 @@ public class UserController {
 
     }
 
-//    @ResponseBody
-//    @RequestMapping(value = "/info/{pageNum}/{pageSize}",method = RequestMethod.GET)
-//    public List pageUser(@PathVariable("pageNum")Integer pageNum, @PathVariable("pageSize")Integer pageSize,String statu){
-//        List<User> userList = userService.getUser(pageNum, pageSize,"采购员");
-//
-////        PageInfo<User> pageInfo = new PageInfo<>(userList);
-////
-////        int total = (int) pageInfo.getTotal();
-////        int PageNum = pageInfo.getPageNum();
-////        int PageSize =  pageInfo.getPageSize();
-////
-////        Map<String,Integer> pageMap = new HashMap<String,Integer>();
-////        pageMap.put("total",total);
-////        pageMap.put("pageNum",PageNum);
-////        pageMap.put("pageSize",PageSize);
-////        System.out.println(pageMap);
-//        return userList;
-//    }
+    @ResponseBody
+    @RequestMapping(value = "/info/{pageNum}/{pageSize}",method = RequestMethod.GET)
+    public List pageUser(@PathVariable("pageNum")Integer pageNum, @PathVariable("pageSize")Integer pageSize){
+        List<User> userList = userService.selectUserPage((pageNum-1)*pageSize, pageSize,"采购员");
+
+        return userList;
+    }
+
+    @GetMapping("/getUserTotal")
+    @ResponseBody
+    public int goodTotal(){
+        return userService.getTotal("采购员");
+    }
+
 
     /**
      * 根据姓名查询该采购员购买过的物资
      * @param name
      * @return
      */
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @RequestMapping("/findByName/{name}")
     @ResponseBody
     public List<Good> findByName(@Validated @PathVariable("name") String name){

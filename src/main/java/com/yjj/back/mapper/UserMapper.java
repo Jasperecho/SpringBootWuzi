@@ -23,9 +23,11 @@ public interface UserMapper {
                             @Param("password") String password
                             );
 
-    //分页查询是采购员
-    @Select("select * from user where statu=#{statu}")
-    List<User> selectUser(String statu);
+
+    @Select("select * from user where statu=#{statu} limit #{pageNum},#{pageSize}")
+    List<User> selectUserPage(@Param("pageNum")Integer pageNum,
+                          @Param("pageSize")Integer pageSize,
+                              String statu);
 
 
     //查询身份是采购员的姓名
@@ -56,4 +58,7 @@ public interface UserMapper {
 
     @Select("select * from user where id=#{id}")
     User getById(Long id);
+
+    @Select("select count(*) from user where statu=#{statu}")
+    int getTotal(String statu);
 }
