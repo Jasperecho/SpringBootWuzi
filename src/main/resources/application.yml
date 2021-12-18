@@ -30,7 +30,7 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 
-markerhub:
+yjj:
   jwt:
     secret: f4e2e52034348f86b67cde581c0f9eb5
     expire: 604800

@@ -39,13 +39,13 @@ public interface UserMapper {
     List<Good> findByName(String name);
 
     //查询未处理的申请个数
-    @Select(" select count(*) from goodorder where orderStatu is null ;")
-    String countOrder();
+    @Select(" select count(*) from goodorder where orderStatu=#{orderStatu}")
+    String countOrder(String orderStatu);
 
     //查询申请表
     @Select("select * from goodorder left JOIN (SELECT id ,name,phoneNum,email from user)u1 " +
-            "ON goodorder.userId = u1.id where orderStatu is null")
-    List<GoodOrder> findNameByUserId();
+            "ON goodorder.userId = u1.id where orderStatu=#{orderStatu}")
+    List<GoodOrder> findNameByUserId(String orderStatu);
 
     //审批申请修改操作
     @Update("UPDATE goodorder set orderStatu=#{orderStatu} where id=#{id}")
@@ -61,4 +61,8 @@ public interface UserMapper {
 
     @Select("select count(*) from user where statu=#{statu}")
     int getTotal(String statu);
+
+    @Update("update user set id=#{id},username=#{username},password=#{password}," +
+            "name=#{name},city=#{city},phoneNum=#{phoneNum},email=#{email},live=#{live} where id=#{id}")
+    void updatePersonal(User user);
 }

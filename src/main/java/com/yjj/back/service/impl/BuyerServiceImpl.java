@@ -1,5 +1,6 @@
 package com.yjj.back.service.impl;
 
+import com.yjj.back.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.yjj.back.domain.GoodOrder;
@@ -18,5 +19,17 @@ public class BuyerServiceImpl implements BuyerService {
     @Override
     public List<GoodOrder> orderInfoById(Long userId) {
         return buyerMapper.orderInfoById(userId);
+    }
+
+    @Override
+    public Result commitAgain(Integer id,String orderStatu) {
+        buyerMapper.commitAgain(id,orderStatu);
+        return new Result(200,"success",1);
+    }
+
+    @Override
+    public Result applyOrder(GoodOrder goodOrder) {
+        buyerMapper.applyOrder(goodOrder);
+        return new Result(200,"success",1);
     }
 }

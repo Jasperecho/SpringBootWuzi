@@ -25,7 +25,7 @@ public interface GoodService {
 
     void deleteGood(Integer id);
 
-    List<GoodOrder> orderRecord();
+    List<GoodOrder> orderRecord(String orderStatu);
 
 
     int getTotal();

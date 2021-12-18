@@ -1,6 +1,5 @@
 package com.yjj.back.controller;
 
-import com.yjj.back.domain.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -99,11 +98,16 @@ public class ManagerController {
 
     }
 
+    /**
+     * 查看审批记录
+     * @param orderStatu
+     * @return
+     */
     @GetMapping("/orderRecord")
     @ResponseBody
-    public List<GoodOrder> orderRecord(){
+    public List<GoodOrder> orderRecord(String orderStatu){
 
-        return goodService.orderRecord();
+        return goodService.orderRecord(orderStatu);
     }
 
     @GetMapping("/screen/{date1}/{date2}")

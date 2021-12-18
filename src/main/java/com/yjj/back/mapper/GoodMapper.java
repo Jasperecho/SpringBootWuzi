@@ -38,8 +38,8 @@ public interface GoodMapper {
 
     //查询已处理的
     @Select("select * from goodorder left JOIN (SELECT id ,name,phoneNum,email from user)u1 " +
-            "ON goodorder.userId = u1.id where orderStatu is not null")
-    List<GoodOrder> orderRecord();
+            "ON goodorder.userId = u1.id where orderStatu <> #{orderStatu}")
+    List<GoodOrder> orderRecord(String orderStatu);
 
 
     @Select("select count(*) from good")

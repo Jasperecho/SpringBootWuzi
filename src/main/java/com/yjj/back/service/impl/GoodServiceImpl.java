@@ -58,8 +58,8 @@ public class GoodServiceImpl implements GoodService {
     }
 
     @Override
-    public List<GoodOrder> orderRecord() {
-        return goodMapper.orderRecord();
+    public List<GoodOrder> orderRecord(String orderStatu) {
+        return goodMapper.orderRecord("审核中");
     }
 
     @Override

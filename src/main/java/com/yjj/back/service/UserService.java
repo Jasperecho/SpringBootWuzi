@@ -1,5 +1,6 @@
 package com.yjj.back.service;
 
+import com.yjj.back.common.Result;
 import com.yjj.back.domain.Good;
 import com.yjj.back.domain.GoodOrder;
 import com.yjj.back.domain.User;
@@ -25,10 +26,10 @@ public interface UserService{
     List<Good> findByName(String name);
 
     //查询未处理的申请个数
-    String countOrder();
+    String countOrder(String orderStatu);
 
 
-    List<GoodOrder> findNameByUserId();
+    List<GoodOrder> findNameByUserId(String orderStatu);
 
     void updateOrder(Integer id,String orderStatu);
 
@@ -38,5 +39,7 @@ public interface UserService{
     User getById(Long id);
 
     int getTotal(String statu);
+
+    Result updatePersonal(User user);
 }
 

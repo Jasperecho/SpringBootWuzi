@@ -1,6 +1,6 @@
 package com.yjj.back.service.impl;
 
-import org.apache.ibatis.annotations.Param;
+import com.yjj.back.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -10,6 +10,7 @@ import com.yjj.back.domain.GoodOrder;
 import com.yjj.back.domain.User;
 import com.yjj.back.mapper.UserMapper;
 import com.yjj.back.service.UserService;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 import java.util.Date;
@@ -78,14 +79,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String countOrder() {
-        return userMapper.countOrder();
+    public String countOrder(String orderStatu) {
+        return userMapper.countOrder("审核中");
     }
 
 
     @Override
-    public List<GoodOrder> findNameByUserId() {
-        return userMapper.findNameByUserId();
+    public List<GoodOrder> findNameByUserId(String orderStatu) {
+        return userMapper.findNameByUserId("审核中");
     }
 
 
@@ -107,6 +108,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public int getTotal(String statu) {
         return userMapper.getTotal(statu);
+    }
+
+    /**
+     * 修改个人信息
+     * @param user
+     * @return
+     */
+    @Override
+    public Result updatePersonal(User user) {
+        if (user==null){
+            return new Result(400,"修改失败",0);
+        }else {
+            userMapper.updatePersonal(user);
+            return new Result(200,"success",1);
+        }
+
     }
 
 

@@ -96,19 +96,19 @@ public class UserController {
      * 申请表中还未被处理的个数
      * @return
      */
-    @RequiresAuthentication
+//    @RequiresAuthentication
     @RequestMapping(value = "/count",method = RequestMethod.GET)
     @ResponseBody
-    public String countOrder(){
+    public String countOrder(String orderStatu){
 
-        return userService.countOrder();
+        return userService.countOrder(orderStatu);
     }
 
 
     @RequestMapping(value = "/findNameById",method = RequestMethod.GET)
     @ResponseBody
-    public List<GoodOrder> findNameByUserId(){
-        return userService.findNameByUserId();
+    public List<GoodOrder> findNameByUserId(String orderStatu){
+        return userService.findNameByUserId(orderStatu);
 
     }
 
@@ -121,9 +121,12 @@ public class UserController {
 
     }
 
-    @PostMapping("/save")
-    public Result save(@Validated @RequestBody User user){
-        return Result.succ(user);
+    @PutMapping("/updatePersonal")
+    @ResponseBody
+    public Result updatePersonal(@RequestBody User user){
+
+        return userService.updatePersonal(user);
+
     }
 
 
