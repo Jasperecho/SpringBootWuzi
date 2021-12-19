@@ -10,7 +10,9 @@ import com.yjj.back.domain.GoodOrder;
 import com.yjj.back.domain.User;
 import com.yjj.back.service.UserService;
 
+
 import java.util.*;
+
 
 @RestController
 @CrossOrigin
@@ -32,24 +34,6 @@ public class UserController {
         }
         return userList;
     }
-//    /**
-//     * 登录
-//     * @param username
-//     * @param password
-//     * @return 返回success用于判断
-//     */
-//    @RequestMapping(value = "/login/{username}/{password}",method = RequestMethod.POST)
-//    @ResponseBody
-//    public String login(@PathVariable String username, @PathVariable String password) {
-//        User user = userService.findUsernameAndPwd(username, password);
-//        if (user!=null && user.getStatu().equals("管理员")){
-//            return "manager_success";
-//        }else if (user!=null && user.getStatu().equals("采购员")){
-//            return "buyer_success";
-//        }else {
-//            return "false";
-//        }
-//    }
 
     /**
      * 查询是采购员的name
@@ -121,13 +105,15 @@ public class UserController {
 
     }
 
-    @PutMapping("/updatePersonal")
+    @PostMapping("/updatePersonal")
     @ResponseBody
     public Result updatePersonal(@RequestBody User user){
 
         return userService.updatePersonal(user);
 
     }
+
+
 
 
 

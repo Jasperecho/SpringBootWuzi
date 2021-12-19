@@ -1,5 +1,7 @@
 package com.yjj.back.service.impl;
 
+import cn.hutool.Hutool;
+import cn.hutool.json.JSONUtil;
 import com.yjj.back.common.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -121,6 +123,11 @@ public class UserServiceImpl implements UserService {
             return new Result(400,"修改失败",0);
         }else {
             userMapper.updatePersonal(user);
+            String key = "user_" + user.getUsername();
+            ValueOperations<String ,User> operations = redisTemplate.opsForValue();
+            System.out.println("------------");
+            System.out.println("数据库中更新用户："+user);
+            operations.set(key,user,1, TimeUnit.HOURS);
             return new Result(200,"success",1);
         }
 

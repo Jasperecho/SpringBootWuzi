@@ -64,5 +64,5 @@ public interface UserMapper {
 
     @Update("update user set id=#{id},username=#{username},password=#{password}," +
             "name=#{name},city=#{city},phoneNum=#{phoneNum},email=#{email},live=#{live} where id=#{id}")
-    void updatePersonal(User user);
+    void updatePersonal( User user);
 }
