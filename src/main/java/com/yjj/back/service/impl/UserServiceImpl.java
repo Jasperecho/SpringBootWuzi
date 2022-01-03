@@ -1,8 +1,10 @@
 package com.yjj.back.service.impl;
 
 import cn.hutool.Hutool;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.yjj.back.common.Result;
+import com.yjj.back.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -12,9 +14,12 @@ import com.yjj.back.domain.GoodOrder;
 import com.yjj.back.domain.User;
 import com.yjj.back.mapper.UserMapper;
 import com.yjj.back.service.UserService;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -54,7 +59,7 @@ public class UserServiceImpl implements UserService {
                 System.out.println("数据库中："+user);
                 System.out.println("------------");
 
-                operations.set(key,user,1, TimeUnit.HOURS);
+                operations.set(key,user,1, TimeUnit.MINUTES);
                 return user;
             }
 
@@ -131,6 +136,57 @@ public class UserServiceImpl implements UserService {
             return new Result(200,"success",1);
         }
 
+    }
+
+    @Override
+    public Result addBuyer(UserVo userVo) {
+
+
+        Result result = new Result();
+        if ("".equals(userVo.getUsername()) || "".equals(userVo.getPassword())){
+            result.setCode(400);
+            result.setMsg("添加的用户名或密码为空,请重新添加");
+            result.setData(0);
+        }
+
+        String userPhoneNum = userVo.getPhoneNum();
+        List<String> allPhoneNum = userMapper.findAllPhoneNum();
+        if (!"".equals(userVo.getUsername())||!"".equals(userVo.getPassword())){
+            for (String obj : allPhoneNum) {
+                if (obj.equals(userPhoneNum)){
+                    result.setCode(400);
+                    result.setMsg("手机号已存在,添加失败");
+                    result.setData(0);
+                    return result;
+                }
+
+            }
+            userVo.setStatu("采购员");
+            userVo.setPerms("buyer");
+            int i = userMapper.addBuyer(userVo);
+            if (i==1){
+                result.setCode(200);
+                result.setMsg("添加成功");
+                result.setData(1);
+            }else {
+                result.setCode(400);
+                result.setMsg("添加失败");
+                result.setData(0);
+            }
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * 查询所有手机号用于判断是否已注册过
+     * @return
+     */
+    @Override
+    public List findAllPhoneNum() {
+        return userMapper.findAllPhoneNum();
     }
 
 

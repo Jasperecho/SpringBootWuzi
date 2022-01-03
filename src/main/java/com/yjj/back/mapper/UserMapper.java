@@ -1,12 +1,10 @@
 package com.yjj.back.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.yjj.back.vo.UserVo;
+import org.apache.ibatis.annotations.*;
 import com.yjj.back.domain.Good;
 import com.yjj.back.domain.GoodOrder;
 import com.yjj.back.domain.User;
-import org.apache.ibatis.annotations.Update;
 
 import java.util.Date;
 import java.util.List;
@@ -52,7 +50,7 @@ public interface UserMapper {
     void updateOrder(@Param("id")Integer id,@Param("orderStatu")String orderStatu);
 
     @Select("select * from goodorder left JOIN (SELECT id ,name,phoneNum,email from user)u1 " +
-            "ON goodorder.userId = u1.id where create_time between #{date1} and #{date2}")
+            "ON goodorder.userId = u1.id where goodorder.create_time >= '#{date1}' and goodorder.create_time <= '#{date2}'")
     List<GoodOrder> orderScreen(@Param("date1") Date date1,@Param("date2") Date date2);
 
 
@@ -65,4 +63,12 @@ public interface UserMapper {
     @Update("update user set id=#{id},username=#{username},password=#{password}," +
             "name=#{name},city=#{city},phoneNum=#{phoneNum},email=#{email},live=#{live} where id=#{id}")
     void updatePersonal( User user);
+
+    @Select("select phoneNum from user")
+    List<String> findAllPhoneNum();
+
+    @Insert("insert into user(username,password,name,phoneNum,email,statu,city,live,perms) " +
+            "values(#{username},#{password},#{name},#{phoneNum},#{email},#{statu}," +
+            "#{city},#{live},#{perms})")
+    int addBuyer(UserVo userVo);
 }

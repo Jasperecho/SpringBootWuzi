@@ -23,7 +23,8 @@ public class BuyerServiceImpl implements BuyerService {
 
     @Override
     public Result commitAgain(Integer id,String orderStatu) {
-        buyerMapper.commitAgain(id,orderStatu);
+
+        buyerMapper.commitAgain(id,"审核中");
         return new Result(200,"success",1);
     }
 

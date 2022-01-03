@@ -1,7 +1,14 @@
 package com.yjj.back.controller;
 
+import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.json.JSONUtil;
+import com.yjj.back.common.Result;
+import com.yjj.back.domain.User;
+import com.yjj.back.vo.UserVo;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import com.yjj.back.domain.Good;
 import com.yjj.back.domain.GoodOrder;
@@ -38,6 +45,7 @@ public class ManagerController {
      * @param pageSize
      * @return
      */
+    @RequiresAuthentication
     @ResponseBody
     @RequestMapping(value = "/good/{pageNum}/{pageSize}",method = RequestMethod.GET)
     public List<Good> pageGood(@PathVariable("pageNum")Integer pageNum, @PathVariable("pageSize")Integer pageSize){
@@ -116,6 +124,20 @@ public class ManagerController {
 
 
         return userService.orderScreen(date1,date2);
+    }
+
+    /**
+     * 增加采购员
+     * @param userVo
+     * @return
+     */
+    @PostMapping("/addBuyer")
+    @ResponseBody
+    public Result addBuyer(@RequestBody UserVo userVo){
+
+
+        return userService.addBuyer(userVo);
+
     }
 
 

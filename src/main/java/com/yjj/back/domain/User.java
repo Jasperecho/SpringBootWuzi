@@ -3,6 +3,7 @@ package com.yjj.back.domain;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -22,7 +23,8 @@ public class User implements Serializable {
     private String live;
     private String perms;
 
-    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss", timezone="GMT+8")
+    @JsonFormat(pattern ="yyyy-MM-dd", timezone="GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date date;
 
 }

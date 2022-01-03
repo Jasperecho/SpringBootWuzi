@@ -4,6 +4,7 @@ import com.yjj.back.common.Result;
 import com.yjj.back.domain.Good;
 import com.yjj.back.domain.GoodOrder;
 import com.yjj.back.domain.User;
+import com.yjj.back.vo.UserVo;
 
 import java.util.Date;
 import java.util.List;
@@ -41,5 +42,9 @@ public interface UserService{
     int getTotal(String statu);
 
     Result updatePersonal(User user);
+
+    Result addBuyer(UserVo userVo);
+
+    List findAllPhoneNum();
 }
 
