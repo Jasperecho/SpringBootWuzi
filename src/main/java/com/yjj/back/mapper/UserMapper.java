@@ -71,4 +71,7 @@ public interface UserMapper {
             "values(#{username},#{password},#{name},#{phoneNum},#{email},#{statu}," +
             "#{city},#{live},#{perms})")
     int addBuyer(UserVo userVo);
+
+    @Select("select * from user where statu=#{statu}")
+    List<User> listBuyer(String statu);
 }

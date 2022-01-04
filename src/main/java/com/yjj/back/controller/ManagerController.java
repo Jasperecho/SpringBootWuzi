@@ -1,20 +1,25 @@
 package com.yjj.back.controller;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.yjj.back.common.Result;
 import com.yjj.back.domain.User;
 import com.yjj.back.vo.UserVo;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import com.yjj.back.domain.Good;
 import com.yjj.back.domain.GoodOrder;
 import com.yjj.back.service.GoodService;
 import com.yjj.back.service.UserService;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -139,6 +144,18 @@ public class ManagerController {
         return userService.addBuyer(userVo);
 
     }
+
+
+    @PostMapping("/excelUser")
+    @ResponseBody
+    public Result excelUser() throws IOException {
+
+        return userService.excelUser();
+    }
+
+
+
+
 
 
 }

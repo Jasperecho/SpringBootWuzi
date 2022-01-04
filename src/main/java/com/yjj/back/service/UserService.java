@@ -6,6 +6,8 @@ import com.yjj.back.domain.GoodOrder;
 import com.yjj.back.domain.User;
 import com.yjj.back.vo.UserVo;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -46,5 +48,7 @@ public interface UserService{
     Result addBuyer(UserVo userVo);
 
     List findAllPhoneNum();
+
+    Result excelUser() throws IOException;
 }
 

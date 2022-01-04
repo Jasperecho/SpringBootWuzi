@@ -1,10 +1,13 @@
 package com.yjj.back.service.impl;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.hutool.Hutool;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.yjj.back.common.Result;
 import com.yjj.back.vo.UserVo;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -19,6 +22,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -150,7 +156,7 @@ public class UserServiceImpl implements UserService {
         }
 
         String userPhoneNum = userVo.getPhoneNum();
-        List<String> allPhoneNum = userMapper.findAllPhoneNum();
+        List<String> allPhoneNum = findAllPhoneNum();
         if (!"".equals(userVo.getUsername())||!"".equals(userVo.getPassword())){
             for (String obj : allPhoneNum) {
                 if (obj.equals(userPhoneNum)){
@@ -187,6 +193,33 @@ public class UserServiceImpl implements UserService {
     @Override
     public List findAllPhoneNum() {
         return userMapper.findAllPhoneNum();
+    }
+
+    @Override
+    public Result excelUser() throws IOException {
+
+        String statu = "采购员";
+        List<User> userList = listBuyer(statu);
+        //参数1：exportParams 导出配置对象 参数2：导出的类型 参数3：导出数据集合
+        Workbook workbook = ExcelExportUtil.exportExcel(new ExportParams("用户信息列表", "用户信息"), User.class, userList);
+        //将excel写入指定位置
+        FileOutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream("D://用户信息表.xls");
+            return new Result(200,"导出表格成功",null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return new Result(400,"导出表格失败",null);
+        }finally {
+            workbook.write(outputStream);
+            outputStream.close();
+            workbook.close();
+        }
+
+    }
+
+    public List<User> listBuyer(String statu) {
+        return userMapper.listBuyer(statu);
     }
 
 
